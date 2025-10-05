@@ -8,6 +8,7 @@ import (
 	"github.com/fabianpoels/fabianpoels-api-go/models"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type PublicController struct{}
@@ -15,7 +16,7 @@ type PublicController struct{}
 func (ctrl PublicController) Ascents(c *gin.Context) {
 	mongoClient := db.GetDbClient()
 
-	cursor, err := collections.GetAscentCollection(mongoClient).Find(c, bson.M{})
+	cursor, err := collections.GetAscentCollection(mongoClient).Find(c, bson.M{}, options.Find().SetSort(bson.M{"number": -1}))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -28,5 +29,10 @@ func (ctrl PublicController) Ascents(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, ascents)
+	publicAscents := make([]models.PublicAscent, len(ascents))
+	for i, ascent := range ascents {
+		publicAscents[i] = models.SerializeAscent(ascent)
+	}
+
+	c.JSON(http.StatusOK, publicAscents)
 }
