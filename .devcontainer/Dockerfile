@@ -5,9 +5,7 @@ WORKDIR /app
 
 # Install only essential system tools
 RUN apt-get update && apt-get install -y \
-    git \
     redis-tools \
-    openssh-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -18,13 +16,6 @@ RUN groupadd --gid 1000 vscode \
 
 # Switch to the vscode user for the remaining operations
 USER vscode
-
-# Set up SSH and Git configuration
-RUN mkdir -p /home/vscode/.ssh \
-    && ssh-keyscan gitlab.com >> /home/vscode/.ssh/known_hosts \
-    && chmod 700 /home/vscode/.ssh \
-    && chmod 600 /home/vscode/.ssh/known_hosts \
-    && git config --global url."ssh://git@gitlab.com/".insteadOf "https://gitlab.com/"
 
 # Install Go tools
 RUN go install golang.org/x/tools/gopls@latest \
