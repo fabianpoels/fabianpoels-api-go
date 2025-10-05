@@ -1,0 +1,33 @@
+{
+    "name": "fabianpoels-api-go-devcontainer",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "go.toolsManagement.checkForUpdates": "local",
+                "go.useLanguageServer": true,
+                "go.gopath": "/go",
+                "editor.formatOnSave": true,
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash"
+                    }
+                }
+            },
+            "extensions": [
+                "golang.go",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    },
+    "forwardPorts": [
+        8080, // API
+        27017, // MongoDB
+        6380 // Redis
+    ],
+    "postCreateCommand": "go mod download && go install -v golang.org/x/tools/gopls@latest && go install -v github.com/go-delve/delve/cmd/dlv@latest",
+    "remoteUser": "vscode"
+}
