@@ -45,22 +45,28 @@ func NewRouter() *gin.Engine {
 
 	// CONTROLLERS
 	authController := new(controllers.AuthController)
+	publicController := new(controllers.PublicController)
 
 	// ROUTING
 	api := router.Group("api")
 	{
-		v1 := api.Group("v1")
+		// AUTH
+		api.POST("/auth/login", authController.Login)
+		api.POST("/auth/refresh-token", authController.RefreshToken)
+		api.POST("/auth/logout", middleware.ValidateJwt(), authController.Logout)
+
+		// PUBLIC
+		public := api.Group("public")
 		{
-			v1.POST("/auth/login", authController.Login)
-			v1.POST("/auth/refresh-token", authController.RefreshToken)
-			v1.POST("/auth/logout", middleware.ValidateJwt(), authController.Logout)
-
-			// LOGGED IN
-			v1.Use(middleware.ValidateJwt())
-			{
-
-			}
+			public.GET("ascents", publicController.Ascents)
 		}
+
+		// LOGGED IN
+		api.Use(middleware.ValidateJwt())
+		{
+
+		}
+
 	}
 	return router
 

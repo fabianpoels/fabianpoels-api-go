@@ -54,7 +54,7 @@ func ValidateJwt() gin.HandlerFunc {
 
 		// look up the user
 		var user models.User
-		err = collections.GetUserCollection(*mongoClient).FindOne(c, bson.D{{Key: "email", Value: email}}).Decode(&user)
+		err = collections.GetUserCollection(mongoClient).FindOne(c, bson.D{{Key: "email", Value: email}}).Decode(&user)
 		if err != nil {
 			log.Println(err)
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"Message": "user not found"})

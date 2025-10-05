@@ -67,7 +67,7 @@ func addUser(email *string, passw *string, role *string) {
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
-	res, err := collections.GetUserCollection(*db.GetDbClient()).InsertOne(context.Background(), newUser)
+	res, err := collections.GetUserCollection(db.GetDbClient()).InsertOne(context.Background(), newUser)
 	if err != nil {
 		panic(err)
 	}

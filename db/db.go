@@ -74,7 +74,7 @@ func userIndexes(ctx context.Context, client *mongo.Client) {
 		Keys:    bson.D{{Key: "email", Value: 1}},
 		Options: options.Index().SetUnique(true),
 	}
-	name, err := collections.GetUserCollection(*client).Indexes().CreateOne(ctx, userEmailIndex)
+	name, err := collections.GetUserCollection(client).Indexes().CreateOne(ctx, userEmailIndex)
 	if err != nil {
 		log.Fatal("⛒ Error creating User email index")
 		log.Fatal(err)

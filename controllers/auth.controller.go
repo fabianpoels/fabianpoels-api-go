@@ -41,7 +41,7 @@ func (a AuthController) Login(c *gin.Context) {
 	}
 
 	var user models.User
-	err := collections.GetUserCollection(*mongoClient).FindOne(c, bson.D{{Key: "email", Value: userLogin.Email}}).Decode(&user)
+	err := collections.GetUserCollection(mongoClient).FindOne(c, bson.D{{Key: "email", Value: userLogin.Email}}).Decode(&user)
 	if err != nil {
 		log.Printf("LOGIN ERROR: user not found by email (%s)", userLogin.Email)
 		c.JSON(http.StatusUnauthorized, "error")
@@ -115,7 +115,7 @@ func (a AuthController) RefreshToken(c *gin.Context) {
 
 	// look up the user in the db
 	var user models.User
-	err = collections.GetUserCollection(*mongoClient).FindOne(c, bson.D{{Key: "_id", Value: objectId}}).Decode(&user)
+	err = collections.GetUserCollection(mongoClient).FindOne(c, bson.D{{Key: "_id", Value: objectId}}).Decode(&user)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, "error")
 		return

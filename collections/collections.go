@@ -5,10 +5,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func GetUserCollection(client mongo.Client) *mongo.Collection {
+func GetUserCollection(client *mongo.Client) *mongo.Collection {
 	return getCollection("users", client)
 }
 
-func getCollection(name string, client mongo.Client) *mongo.Collection {
+func GetAscentCollection(client *mongo.Client) *mongo.Collection {
+	return getCollection("ascents", client)
+}
+
+func getCollection(name string, client *mongo.Client) *mongo.Collection {
 	return client.Database(config.GetConfig().GetString("database")).Collection(name)
 }
