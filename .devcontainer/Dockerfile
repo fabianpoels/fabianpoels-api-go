@@ -1,4 +1,4 @@
-FROM golang:1.25.1-bullseye
+FROM golang:1.25.1-bookworm
 
 # Set working directory
 WORKDIR /app
