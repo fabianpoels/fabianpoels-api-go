@@ -18,7 +18,11 @@ import (
 )
 
 func main() {
-	environment := flag.String("e", "development", "environment")
+	env := os.Getenv("APP_ENV")
+	if env == "" {
+		env = "development"
+	}
+	environment := flag.String("e", env, "environment")
 	email := flag.String("email", "", "Valid email for user")
 	passw := flag.String("password", "", "Password for user")
 	role := flag.String("role", "user", "User role")
