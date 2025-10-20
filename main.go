@@ -21,7 +21,6 @@ func main() {
 	environment := flag.String("e", "development", "environment")
 	email := flag.String("email", "", "Valid email for user")
 	passw := flag.String("password", "", "Password for user")
-	role := flag.String("role", "user", "User role")
 	os.Setenv("environment", *environment)
 	task := flag.String("task", "server", "Task to run (server)")
 
@@ -42,12 +41,12 @@ func main() {
 	case "db-indexes":
 		db.CreateIndexes()
 	case "add-user":
-		addUser(email, passw, role)
+		addUser(email, passw)
 	}
 
 }
 
-func addUser(email *string, passw *string, role *string) {
+func addUser(email *string, passw *string) {
 	if len(*email) < 3 {
 		log.Fatalf("Email too short")
 	}
