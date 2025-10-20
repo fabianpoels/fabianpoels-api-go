@@ -163,35 +163,3 @@ func (a AuthController) Logout(c *gin.Context) {
 	c.SetCookie(cookieName, "", -1, "/", os.Getenv("DOMAIN"), false, true)
 	c.JSON(http.StatusOK, gin.H{})
 }
-
-// func (a AuthController) Register(c *gin.Context) {
-// 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-// 	var user models.User
-// 	defer cancel()
-
-// 	if err := c.BindJSON(&user); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	password, err := utils.HashPassword(user.Password)
-
-// 	if err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 	}
-
-// 	newUser := models.User{
-// 		Id:       primitive.NewObjectID(),
-// 		Email:    user.Email,
-// 		Name:     user.Name,
-// 		Password: password,
-// 	}
-
-// 	result, err := models.GetUserCollection(*client).InsertOne(ctx, newUser)
-
-// 	if err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 	}
-
-// 	c.JSON(http.StatusCreated, result)
-// }
