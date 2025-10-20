@@ -25,7 +25,7 @@
     },
     "forwardPorts": [
         8080, // API
-        27017, // MongoDB
+        27018, // MongoDB
         6380 // Redis
     ],
     "postCreateCommand": "go mod download && go install -v golang.org/x/tools/gopls@latest && go install -v github.com/go-delve/delve/cmd/dlv@latest",
