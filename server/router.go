@@ -46,6 +46,7 @@ func NewRouter() *gin.Engine {
 	// CONTROLLERS
 	authController := new(controllers.AuthController)
 	publicController := new(controllers.PublicController)
+	adminController := new(controllers.AdminController)
 
 	// ROUTING
 	api := router.Group("api")
@@ -64,7 +65,10 @@ func NewRouter() *gin.Engine {
 		// LOGGED IN
 		api.Use(middleware.ValidateJwt())
 		{
-
+			admin := api.Group("admin")
+			{
+				admin.POST("ascent", adminController.AddAscent)
+			}
 		}
 
 	}

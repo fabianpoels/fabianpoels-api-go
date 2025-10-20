@@ -6,7 +6,7 @@ import (
 )
 
 type Ascent struct {
-	Number      uint      `json:"number" bson:"number"`
+	Number      uint32    `json:"number" bson:"number"`
 	Date        string    `json:"date" bson:"date"`
 	Country     string    `json:"country" bson:"country"`
 	CountryCode string    `json:"countryCode" bson:"countryCode"`
@@ -22,7 +22,7 @@ type Ascent struct {
 }
 
 type PublicAscent struct {
-	Number      uint   `json:"number"`
+	Number      uint32 `json:"number"`
 	Country     string `json:"country"`
 	CountryCode string `json:"countryCode"`
 	Area        string `json:"area"`

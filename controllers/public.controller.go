@@ -15,7 +15,7 @@ import (
 
 type PublicController struct{}
 
-const cacheKey = "ascents:public"
+const AscentsCacheKey = "ascents:public"
 
 func (ctrl PublicController) Ascents(c *gin.Context) {
 	// try to load from cache
@@ -53,7 +53,7 @@ func (ctrl PublicController) Ascents(c *gin.Context) {
 
 func publicAscentsFromCache(c *gin.Context) (ascents []models.PublicAscent, err error) {
 	cacheService := cache.Service{C: c}
-	cacheString, err := cacheService.Get(cacheKey)
+	cacheString, err := cacheService.Get(AscentsCacheKey)
 	if err != nil {
 		return ascents, err
 	}
@@ -69,5 +69,5 @@ func publicAscentsFromCache(c *gin.Context) (ascents []models.PublicAscent, err 
 func storePublicAscentsInCache(c *gin.Context, ascents []models.PublicAscent) {
 	cacheService := cache.Service{C: c}
 	cacheString, _ := json.Marshal(ascents)
-	cacheService.Set(cacheKey, cacheString, 0)
+	cacheService.Set(AscentsCacheKey, cacheString, 0)
 }
