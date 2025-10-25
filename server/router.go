@@ -67,6 +67,7 @@ func NewRouter() *gin.Engine {
 		{
 			admin := api.Group("admin")
 			{
+				admin.GET("ascents", adminController.Ascents)
 				admin.POST("ascent", adminController.AddAscent)
 			}
 		}

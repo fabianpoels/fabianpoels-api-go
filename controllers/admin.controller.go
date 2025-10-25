@@ -17,6 +17,25 @@ import (
 type AdminController struct {
 }
 
+func (ctrl AdminController) Ascents(c *gin.Context) {
+	mongoClient := db.GetDbClient()
+
+	cursor, err := collections.GetAscentCollection(mongoClient).Find(c, bson.M{}, options.Find().SetSort(bson.M{"number": -1}))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	defer cursor.Close(c)
+
+	var ascents []models.Ascent
+	if err = cursor.All(c, &ascents); err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, ascents)
+}
+
 func (ctrl AdminController) AddAscent(c *gin.Context) {
 	var ascent models.Ascent
 	err := c.BindJSON(&ascent)
